@@ -18,7 +18,10 @@ export default class Header extends Component{
           <Text style={titleStyle}>Wearing a Dress</Text>
           <Image source={icLogo} style={iconStyle}/>
         </View>
-        <TextInput style={textInput} placeholder="What do you want to buy?"/>
+        <TextInput style={textInput}
+                  placeholder="What do you want to buy?"
+                  underlineColorAndroid="transparent"
+        />
       </View>
     );
   }
@@ -27,7 +30,7 @@ export default class Header extends Component{
 const styles = StyleSheet.create({
   wrapper: {height: height/8, backgroundColor:"rgba(31, 145, 196, 0.93)",padding:10, justifyContent:"space-around"},
   row1: {flexDirection:"row", justifyContent:"space-between"},
-  textInput: {height: height/20,backgroundColor:"#FFF", paddingLeft:10},
+  textInput: {height: height/23,backgroundColor:"#FFF", paddingLeft:10, paddingVertical:0},
   titleStyle: {color:"#FFF", fontFamily:'Avenir',fontSize:20},
   iconStyle: {width:25,height:25}
 });
