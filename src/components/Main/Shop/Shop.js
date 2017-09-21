@@ -8,6 +8,7 @@ import Contact from "./Contact/Contact.js";
 import Cart from "./Cart/Cart.js";
 import Search from "./Search/Search.js";
 import Header from "./Header.js";
+import global from "../../../components/global.js";
 
 import homeIconS from "../../../appIcon/home.png";
 import homeIcon from "../../../appIcon/home0.png";
@@ -23,16 +24,22 @@ export default class Shop extends Component{
     super(props);
     this.state={
       selectedTab:'home',
-      types:[]
+      types:[],
+      topProducts:[],
+      cartArray: []
     };
+    global.addProductToCart = this.addProductToCart.bind(this);
+  }
+  addProductToCart(product){
+    this.setState({ cartArray: this.state.cartArray.concat(product)});
   }
 
   componentDidMount(){
     fetch("http://192.168.1.92:81/api")
     .then(res => res.json())
     .then(resJSON => {
-      const { type }= resJSON;
-      this.setState({types: type});
+      const { type, product }= resJSON;
+      this.setState({types: type, topProducts: product});
     });
   }
   openMenu(){
@@ -41,7 +48,7 @@ export default class Shop extends Component{
   }
   render(){
     const {iconStyle} = styles;
-    const {types, selectedTab} = this.state;
+    const {types, selectedTab, topProducts, cartArray} = this.state;
     return(
       <View style={{flex:1}}>
         <Header onOpen={this.openMenu.bind(this)}/>
@@ -54,7 +61,7 @@ export default class Shop extends Component{
             renderSelectedIcon={() => <Image source={homeIconS} style={iconStyle} />}
             selectedTitleStyle={{color:"rgba(31, 145, 196, 0.93)"}}
           >
-            <Home types={types}/>
+            <Home types={types} topProducts={topProducts}/>
           </TabNavigator.Item>
           <TabNavigator.Item
             selected={selectedTab === 'cart'}
@@ -62,10 +69,10 @@ export default class Shop extends Component{
             onPress={() => this.setState({ selectedTab: 'cart' })}
             renderIcon={() => <Image source={cartIcon} style={iconStyle} />}
             renderSelectedIcon={() => <Image source={cartIconS} style={iconStyle} />}
-            badgeText="1"
+            badgeText={cartArray.length}
             selectedTitleStyle={{color:"rgba(31, 145, 196, 0.93)"}}
           >
-            <Cart />
+            <Cart cartArray={cartArray}/>
           </TabNavigator.Item>
           <TabNavigator.Item
             selected={selectedTab === 'search'}
