@@ -8,12 +8,14 @@ import partyIcon from '../../../../temp/party.jpg';
 
 
 const {width, height} = Dimensions.get("window");
+const url = 'http://192.168.1.92:81/api/images/type/';
 export default class Category extends Component{
   gotoListProduct(){
     const {navigator} = this.props;
     navigator.push({name:'LIST_PRODUCT'});
   }
   render(){
+    const {types } = this.props;
     const {wrapper, textStyle, imageStyle, cateTitle} = styles;
     return(
       <View style={wrapper}>
@@ -22,21 +24,13 @@ export default class Category extends Component{
         </View>
         <View style={{flex:4, justifyContent:"flex-end"}}>
           <Swiper width={imageWidth} height={imageHeight}>
-            <TouchableOpacity onPress={this.gotoListProduct.bind(this)}>
-              <Image source={littleIcon} style={imageStyle}>
-                <Text style={cateTitle}>Maxi Dress</Text>
-              </Image>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={this.gotoListProduct.bind(this)}>
-              <Image source={maxiIcon} style={imageStyle}>
-                <Text style={cateTitle}>Maxi Dress</Text>
-              </Image>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={this.gotoListProduct.bind(this)}>
-              <Image source={partyIcon} style={imageStyle}>
-                <Text style={cateTitle}>Maxi Dress</Text>
-              </Image>
-            </TouchableOpacity>
+            {types.map(e=>(
+              <TouchableOpacity onPress={this.gotoListProduct.bind(this)} key={e.id}>
+                <Image source={{uri:`http://192.168.1.92:81/api/images/type/${e.image}`}} style={imageStyle}>
+                  <Text style={cateTitle}>{e.name}</Text>
+                </Image>
+              </TouchableOpacity>
+            ))}
           </Swiper>
         </View>
       </View>

@@ -22,8 +22,18 @@ export default class Shop extends Component{
   constructor(props){
     super(props);
     this.state={
-      selectedTab:'home'
+      selectedTab:'home',
+      types:[]
     };
+  }
+
+  componentDidMount(){
+    fetch("http://192.168.1.92:81/api")
+    .then(res => res.json())
+    .then(resJSON => {
+      const { type }= resJSON;
+      this.setState({types: type});
+    });
   }
   openMenu(){
     const { open } = this.props;
@@ -31,22 +41,23 @@ export default class Shop extends Component{
   }
   render(){
     const {iconStyle} = styles;
+    const {types, selectedTab} = this.state;
     return(
       <View style={{flex:1}}>
         <Header onOpen={this.openMenu.bind(this)}/>
         <TabNavigator>
           <TabNavigator.Item
-            selected={this.state.selectedTab === 'home'}
+            selected={selectedTab === 'home'}
             title="Home"
             onPress={() => this.setState({ selectedTab: 'home' })}
             renderIcon={() => <Image source={homeIcon} style={iconStyle} />}
             renderSelectedIcon={() => <Image source={homeIconS} style={iconStyle} />}
             selectedTitleStyle={{color:"rgba(31, 145, 196, 0.93)"}}
           >
-            <Home />
+            <Home types={types}/>
           </TabNavigator.Item>
           <TabNavigator.Item
-            selected={this.state.selectedTab === 'cart'}
+            selected={selectedTab === 'cart'}
             title="Cart"
             onPress={() => this.setState({ selectedTab: 'cart' })}
             renderIcon={() => <Image source={cartIcon} style={iconStyle} />}
@@ -57,7 +68,7 @@ export default class Shop extends Component{
             <Cart />
           </TabNavigator.Item>
           <TabNavigator.Item
-            selected={this.state.selectedTab === 'search'}
+            selected={selectedTab === 'search'}
             title="Search"
             onPress={() => this.setState({ selectedTab: 'search' })}
             renderIcon={() => <Image source={searchIcon} style={iconStyle} />}
@@ -67,7 +78,7 @@ export default class Shop extends Component{
             <Search />
           </TabNavigator.Item>
           <TabNavigator.Item
-            selected={this.state.selectedTab === 'contact'}
+            selected={selectedTab === 'contact'}
             title="Contact"
             onPress={() => this.setState({ selectedTab: 'contact' })}
             renderIcon={() => <Image source={contactIcon} style={iconStyle} />}
