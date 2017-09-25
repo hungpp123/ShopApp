@@ -10,6 +10,10 @@ import Search from "./Search/Search.js";
 import Header from "./Header.js";
 import global from "../../../components/global.js";
 
+import initData from '../../../api/initData.js';
+import saveCart from '../../../api/saveCart.js';
+import getCart from '../../../api/getCart.js';
+
 import homeIconS from "../../../appIcon/home.png";
 import homeIcon from "../../../appIcon/home0.png";
 import cartIconS from "../../../appIcon/cart.png";
@@ -31,16 +35,19 @@ export default class Shop extends Component{
     global.addProductToCart = this.addProductToCart.bind(this);
   }
   addProductToCart(product){
-    this.setState({ cartArray: this.state.cartArray.concat({product: product, quantity: 1})});
+    this.setState(
+      { cartArray: this.state.cartArray.concat({product: product, quantity: 1})},
+      () => saveCart(this.state.cartArray));
   }
 
   componentDidMount(){
-    fetch("http://192.168.1.92:81/api")
-    .then(res => res.json())
+    initData()
     .then(resJSON => {
       const { type, product }= resJSON;
       this.setState({types: type, topProducts: product});
     });
+    getCart()
+    .then(cartArray => this.setState({cartArray: cartArray}));
   }
   openMenu(){
     const { open } = this.props;
