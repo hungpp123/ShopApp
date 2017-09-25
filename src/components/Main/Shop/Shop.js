@@ -31,7 +31,7 @@ export default class Shop extends Component{
     global.addProductToCart = this.addProductToCart.bind(this);
   }
   addProductToCart(product){
-    this.setState({ cartArray: this.state.cartArray.concat(product)});
+    this.setState({ cartArray: this.state.cartArray.concat({product: product, quantity: 1})});
   }
 
   componentDidMount(){
