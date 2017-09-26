@@ -6,10 +6,17 @@ import { View, Text, TouchableOpacity,
 import icBack from "../../appIcon/back_white.png";
 import icLogo from "../../appIcon/ic_logo.png";
 
+import register from "../../api/register.js";
+
 export default class Authentication extends Component {
   constructor(props){
     super(props);
     this.state={isSignIn: true }
+  }
+
+  componentDidMount(){
+    register('hungnd','nguyen dinh hung', '123')
+    .then(res => console.log(res));
   }
 
   signIn(){
@@ -32,8 +39,8 @@ export default class Authentication extends Component {
 
     const signInJSX=(
       <View>
-      <TextInput style={inputStyle} placeholder="Enter your email"/>
-      <TextInput style={inputStyle} placeholder="Enter your password"/>
+      <TextInput style={inputStyle} underlineColorAndroid="transparent" placeholder="Enter your email"/>
+      <TextInput style={inputStyle} underlineColorAndroid="transparent" placeholder="Enter your password"/>
         <TouchableOpacity style={bigButton}>
           <Text style={buttonText}>SIGN IN NOW</Text>
         </TouchableOpacity>
@@ -42,10 +49,10 @@ export default class Authentication extends Component {
 
     const signUpJSX = (
       <View>
-      <TextInput style={inputStyle} placeholder="Enter your name"/>
-      <TextInput style={inputStyle} placeholder="Enter your email"/>
-      <TextInput style={inputStyle} placeholder="Enter your password"/>
-      <TextInput style={inputStyle} placeholder="Re-enter your password"/>
+      <TextInput style={inputStyle} underlineColorAndroid="transparent" placeholder="Enter your name"/>
+      <TextInput style={inputStyle} underlineColorAndroid="transparent" placeholder="Enter your email"/>
+      <TextInput style={inputStyle} underlineColorAndroid="transparent" placeholder="Enter your password"/>
+      <TextInput style={inputStyle} underlineColorAndroid="transparent" placeholder="Re-enter your password"/>
         <TouchableOpacity style={bigButton}>
           <Text style={buttonText}>SIGN UP NOW</Text>
         </TouchableOpacity>

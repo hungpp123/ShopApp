@@ -6,7 +6,7 @@ import profileIcon from "../../temp/profile.png";
 export default class Menu extends Component{
   constructor(props){
     super(props);
-    this.state = {isLoggedIn:true}
+    this.state = {isLoggedIn:false}
   }
   gotoAuthentication(){
     const { navigator } = this.props;
