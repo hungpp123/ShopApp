@@ -4,12 +4,14 @@ import Drawer from "react-native-drawer";
 import Menu from "./Menu.js";
 import Shop from "./Shop/Shop.js";
 import checkLogin from "../../api/checkLogin.js";
-
+import getToken from "../../api/getToken.js";
+import global from "../global.js";
 export default class Main extends Component {
 
   componentDidMount(){
-    checkLogin(token)
-    .then(res => console.log("CHECK LOGIN:", res))
+    getToken()
+    .then(token => checkLogin(token))
+    .then(res => global.onSignIn(res.user))
     .catch(err => console.log("CHECK LOGIN:",err));
   }
   closeControlPanel = () => {
