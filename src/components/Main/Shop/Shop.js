@@ -33,11 +33,28 @@ export default class Shop extends Component{
       cartArray: []
     };
     global.addProductToCart = this.addProductToCart.bind(this);
+    global.incrQuantity = this.incrQuantity.bind(this);
   }
   addProductToCart(product){
     this.setState(
       { cartArray: this.state.cartArray.concat({product: product, quantity: 1})},
-      () => saveCart(this.state.cartArray));
+      () => saveCart(this.state.cartArray)
+    );
+  }
+
+  incrQuantity(productId){
+    const index = this.state.cartArray.findIndex(e => e.product.id === productId);
+    const newCart = this.state.cartArray.map(e =>{
+      if(e.product.id !== productId) return e;
+      return { product: e.product, quantity: e.quantity + 1};
+    });
+    this.setState({
+      cartArray: newCart,
+    });
+  }
+
+  decrQuantity(productId){
+
   }
 
   componentDidMount(){

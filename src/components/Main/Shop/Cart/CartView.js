@@ -10,9 +10,14 @@ function toTitleCase(str) {
     return str.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
 }
 
+import global from '../../../global.js';
+
 const url = 'http://192.168.1.92:81/api/images/product/';
 
 class CartView extends Component {
+    incrQuantity(id){
+      global.incrQuantity(id);
+    }
     gotoDetail() {
         const { navigator } = this.props;
         navigator.push({ name: 'PRODUCT_DETAIL' });
@@ -45,7 +50,7 @@ class CartView extends Component {
                             </View>
                             <View style={productController}>
                                 <View style={numberOfProduct}>
-                                    <TouchableOpacity>
+                                    <TouchableOpacity onPress={() => this.incrQuantity(cartItem.product.id)}>
                                         <Text>+</Text>
                                     </TouchableOpacity>
                                     <Text>{cartItem.quantity}</Text>
