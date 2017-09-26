@@ -3,6 +3,8 @@ import { Text, View, TextInput, TouchableOpacity, StyleSheet} from "react-native
 
 import signIn from '../../api/signIn.js';
 import global from '../global.js';
+import saveToken from '../../api/saveToken.js';
+
 export default class SignIn extends Component{
   constructor(props){
     super(props);
@@ -12,12 +14,14 @@ export default class SignIn extends Component{
     };
   }
 
+
   onSignIn(){
     const { email, password} = this.state;
     signIn(email, password)
     .then(res => {
       global.onSignIn(res.user);
       this.props.goBackToMain();
+      saveToken(res.token);
     })
     .catch(err => console.log(err));
   }
