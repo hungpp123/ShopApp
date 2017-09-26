@@ -2,11 +2,16 @@ import React, {Component} from "react";
 import {View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 
 import profileIcon from "../../temp/profile.png";
-
+import global from '../global.js';
 export default class Menu extends Component{
   constructor(props){
     super(props);
-    this.state = {isLoggedIn:false}
+    this.state = {user: null};
+    global.onSignIn = this.onSignIn.bind(this);
+  }
+
+  onSignIn(user){
+    this.setState({user: user});
   }
   gotoAuthentication(){
     const { navigator } = this.props;
@@ -26,6 +31,7 @@ export default class Menu extends Component{
        btnText, btnSignInStyle, btnTextSignIn,
        loginContainer, username
      } = styles;
+     const {user} = this.state;
     const logoutJSX = (
       <View style={{flex:1}}>
         <TouchableOpacity style={btnStyle} onPress={this.gotoAuthentication.bind(this)}>
@@ -35,7 +41,7 @@ export default class Menu extends Component{
     );
     const loginJSX=(
       <View style={loginContainer}>
-        <Text style={username}>Range Rover</Text>
+        <Text style={username}>{user ? user.name : ''}</Text>
         <View>
           <TouchableOpacity style={btnSignInStyle} onPress={this.gotoOrderHistory.bind(this)}>
             <Text style={btnTextSignIn}>Order History</Text>
@@ -49,7 +55,7 @@ export default class Menu extends Component{
         </View>
       </View>
     );
-    const mainJSX = this.state.isLoggedIn ? loginJSX : logoutJSX;
+    const mainJSX = this.state.user ? loginJSX : logoutJSX;
     return(
       <View style={container}>
         <Image source={profileIcon} style={profile}/>

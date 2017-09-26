@@ -28,7 +28,7 @@ export default class SignUp extends Component{
       'Notice',
       'Sign up successfully',
       [
-        {text: 'OK', onPress: () => console.log('Ask me later pressed')},
+        {text: 'OK', onPress: this.props.gotoSignIn()},
       ],
       { cancelable: false }
     )
