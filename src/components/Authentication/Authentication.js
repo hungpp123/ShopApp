@@ -1,22 +1,19 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity,
-        Image, StyleSheet, TextInput,
+        Image, StyleSheet,
        } from 'react-native';
 
 import icBack from "../../appIcon/back_white.png";
 import icLogo from "../../appIcon/ic_logo.png";
 
 import register from "../../api/register.js";
+import SignIn from './SignIn.js';
+import SignUp from './SignUp.js';
 
 export default class Authentication extends Component {
   constructor(props){
     super(props);
     this.state={isSignIn: true }
-  }
-
-  componentDidMount(){
-    register('hungnd','nguyen dinh hung', '123')
-    .then(res => console.log(res));
   }
 
   signIn(){
@@ -34,32 +31,12 @@ export default class Authentication extends Component {
   render() {
     const { row1, iconStyle, titleStyle, container,
         controlStyle, signInStyle, signUpStyle, activeStyle,
-        inactiveStyle, inputStyle, bigButton, buttonText
+        inactiveStyle
     } = styles;
 
-    const signInJSX=(
-      <View>
-      <TextInput style={inputStyle} underlineColorAndroid="transparent" placeholder="Enter your email"/>
-      <TextInput style={inputStyle} underlineColorAndroid="transparent" placeholder="Enter your password"/>
-        <TouchableOpacity style={bigButton}>
-          <Text style={buttonText}>SIGN IN NOW</Text>
-        </TouchableOpacity>
-      </View>
-    );
 
-    const signUpJSX = (
-      <View>
-      <TextInput style={inputStyle} underlineColorAndroid="transparent" placeholder="Enter your name"/>
-      <TextInput style={inputStyle} underlineColorAndroid="transparent" placeholder="Enter your email"/>
-      <TextInput style={inputStyle} underlineColorAndroid="transparent" placeholder="Enter your password"/>
-      <TextInput style={inputStyle} underlineColorAndroid="transparent" placeholder="Re-enter your password"/>
-        <TouchableOpacity style={bigButton}>
-          <Text style={buttonText}>SIGN UP NOW</Text>
-        </TouchableOpacity>
-      </View>
-    );
     const {isSignIn} = this.state;
-    const mainJSX = isSignIn ? signInJSX : signUpJSX;
+    const mainJSX = isSignIn ? <SignIn /> : <SignUp />;
     return (
       <View style={container}>
         <View style={row1}>
@@ -126,25 +103,4 @@ const styles = StyleSheet.create({
     borderTopRightRadius:20,
     borderBottomRightRadius:20,
   },
-  inputStyle:{
-    height:50,
-    backgroundColor:"#FFF",
-    marginBottom:10,
-    borderRadius:20,
-    paddingLeft:30
-  },
-  bigButton:{
-    height:50,
-    borderRadius:20,
-    borderWidth:1,
-    borderColor:"#FFF",
-    alignItems:"center",
-    justifyContent:"center",
-    marginBottom:10
-  },
-  buttonText:{
-    fontFamily:"Avenir",
-    color:"#FFF",
-    fontWeight:'400'
-  }
 });
